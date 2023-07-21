@@ -1,0 +1,91 @@
+Dim lastPrice As Range
+Dim priceChange As Range
+Dim volumes As Range
+Dim percentChange As Range
+
+Dim priceUp As FormatCondition
+Dim priceDown As FormatCondition
+Dim highVolume As FormatCondition
+
+Sub FormatPriceChange()
+    
+    Set priceChange = Range([D2], [D2].End(xlDown))
+    
+    Set priceUp = priceChange.FormatConditions.Add(xlCellValue, xlGreater, 0)
+     
+    Set priceDown = priceChange.FormatConditions.Add(xlCellValue, xlLess, 0)
+    
+    priceUp.Interior.Color = RGB(0, 255, 0)
+    
+    priceDown.Interior.Color = RGB(255, 0, 0)
+    
+End Sub
+
+Sub ClearAllConditionalFormatting()
+    
+    Set lastPrice = Range([C2], [C2].End(xlDown))
+
+    Cells.FormatConditions.Delete
+    lastPrice.ClearFormats
+    Range([C2], [C2].End(xlDown)).Font.Size = 16
+            
+End Sub
+
+Sub FormatLastPrice()
+
+    Set lastPrice = Range([C2], [C2].End(xlDown))
+    
+    Dim cell As Range
+    
+    For Each cell In lastPrice.Cells
+    
+        If cell.Offset(0, 1).Value > 0 Then
+            cell.Interior.Color = RGB(0, 255, 0)
+            cell.Font.Bold = True
+        
+        Else
+            cell.Interior.Color = RGB(255, 0, 0)
+            cell.Font.Color = RGB(255, 255, 255)
+        End If
+                
+    Next cell
+
+End Sub
+
+Sub FormatVolume()
+
+    Set volumes = Range([F2], [F2].End(xlDown))
+    volumes.NumberFormat = "#,###"
+    
+    Set highVolume = volumes.FormatConditions.Add(xlCellValue, xlGreater, 10000000)
+    
+    highVolume.Interior.Color = RGB(102, 0, 204)
+    highVolume.Font.Color = RGB(255, 255, 255)
+    
+End Sub
+
+Sub FormatPercentChangeAbsRef()
+
+    Set percentChange = Range([E2], [E2].End(xlDown))
+    
+    [E2].Formula = "=D2/C2"
+    [E2].NumberFormat = "0.00%"
+    
+    percentChange.FillDown
+         
+End Sub
+
+Sub FormatPercentChangeRelativeRef()
+
+    Dim numStocks As Integer
+
+    Set priceChange = Range([D2], [D2].End(xlDown))
+    numStocks = priceChange.Rows.Count
+
+    Set percentChange = Range([E2], [E2].Offset(numStocks - 1, 0))
+
+    percentChange.FormulaR1C1 = "=RC[-1]/RC[-2]"
+    percentChange.NumberFormat = "0.00%"
+    
+End Sub
+

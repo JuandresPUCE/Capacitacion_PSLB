@@ -1,0 +1,90 @@
+Sub auto_open()
+
+    MsgBox "Welcome!! to the course on VBA"
+
+End Sub
+
+Sub auto_close()
+
+    MsgBox "Bye!! see you soon"
+
+End Sub
+
+Sub CellReferencing()
+
+    ActiveCell.Value = "Game"
+    [B1].Value = "Year"
+    [C1].Value = "Genre"
+    [D1].Value = "Publisher"
+    [E1].Value = "North America"
+    [F1].Value = "Europe"
+    [G1].Value = "Japan"
+    [H1].Value = "Rest of the World"
+    [I1].Value = "Global"
+
+End Sub
+
+Sub BoldItalic()
+    
+   Dim myRange as Range
+    Set myRange =Range("A1:I1")
+
+    [A1:I1].Font.Bold = True
+    Range("A1:I1").Font.Italic = True
+    ActiveSheet.Range("A1:I1").Font.Bold = False
+    Sheets("Sheet1").Range("A1:I1").Font.Italic = False
+    ActiveSheet.[A1:I1].Font.Bold = True
+    myRange.Font.Italic=True
+
+End Sub
+
+Sub ColumnAutoFit()
+
+   Cells.EntireColumn.AutoFit
+   
+End Sub
+
+Sub RowAutoFit()
+
+    Cells.EntireRow.AutoFit
+    
+End Sub
+
+Sub WrapText()
+
+    Range("A1:D513").WrapText = False
+    
+End Sub
+
+-----------------------------------------------------------------------------------------------
+Function User()
+
+    User = Application.UserName
+
+End Function
+------------------------------------------------------------------------------------------
+Sub Games2013()
+'
+' Games2013 Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+A
+'
+    Range("A1:A21").Select
+    ActiveWindow.SmallScroll Down:=-18
+End Sub
+Sub Highlight()
+'
+' Highlight Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+Q
+'
+    ActiveCell.Range("A1:A21").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent2
+        .TintAndShade = 0.799981688894314
+        .PatternTintAndShade = 0
+    End With
+    ActiveCell.Offset(0, 2).Range("A1").Select
+End Sub
